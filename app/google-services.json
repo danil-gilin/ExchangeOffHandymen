@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "950524286708",
+    "project_id": "exchange-of-handymen",
+    "storage_bucket": "exchange-of-handymen.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:950524286708:android:57404908067ee5932f70a1",
+        "android_client_info": {
+          "package_name": "com.example.exchangeofhandymen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "950524286708-0v1utqcjjgr0d29cgvvc9gnbqssl479b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.exchangeofhandymen",
+            "certificate_hash": "2685fc4ae76bbb225ca3353fefdcaf63c23d3e14"
+          }
+        },
+        {
+          "client_id": "950524286708-jc1g09ouq7l2mcokmejl77r5cokv4lk4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBIzrxJ5TJ1GSCaZqWQZ_Va0VyNlp4b_Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "950524286708-jc1g09ouq7l2mcokmejl77r5cokv4lk4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
