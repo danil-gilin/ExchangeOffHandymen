@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Exchange of handymen</string>
     <string name="skip">Skip</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_profile_bottom_nav">Профиль</string>
+    <string name="title_workers_bottom_nav">Рабочие</string>
 </resources>
