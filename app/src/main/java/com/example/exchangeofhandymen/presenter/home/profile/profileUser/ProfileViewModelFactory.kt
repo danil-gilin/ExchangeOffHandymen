@@ -1,4 +1,4 @@
-package com.example.exchangeofhandymen.presenter.home.profile
+package com.example.exchangeofhandymen.presenter.home.profile.profileUser
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

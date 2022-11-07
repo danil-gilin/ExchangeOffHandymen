@@ -3,6 +3,7 @@ package com.example.exchangeofhandymen.data.login
 import android.app.Activity
 import android.content.Context
 import android.util.Log
+import com.example.exchangeofhandymen.entity.CustomException
 import com.example.exchangeofhandymen.entity.PhoneAuthResult
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
@@ -37,7 +38,6 @@ class LoginRepository @Inject constructor(@ActivityContext private val activity:
                         cont.resume(PhoneAuthResult.CodeSent(verificationId,token))
                     }
                 }
-
 
                 val options = PhoneAuthOptions.newBuilder(auth)
                     .setPhoneNumber(number)
@@ -83,8 +83,15 @@ class LoginRepository @Inject constructor(@ActivityContext private val activity:
             auth.signInWithCredential(credential)
                 .addOnCompleteListener(activity as Activity) { task ->
                     if (task.isSuccessful) {
-                        cont.resume(PhoneAuthResult.VerificationCompleted(credential))
+                        if (auth.currentUser != null) {
+                            if (auth.currentUser?.metadata?.creationTimestamp == auth.currentUser?.metadata?.lastSignInTimestamp) {
+                                cont.resume(PhoneAuthResult.VerificationCompleted(credential,true))
+                            }else{
+                                cont.resume(PhoneAuthResult.VerificationCompleted(credential))
+                            }
+                        }
                     } else {
+                        cont.resume(PhoneAuthResult.ErrorCode())
                         Log.d("TAG", "signInWithPhoneAuthCredential: ${task.exception.toString()}")
                         if (task.exception is FirebaseAuthInvalidCredentialsException) {
 

@@ -16,8 +16,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.exchangeofhandymen.R
 import com.example.exchangeofhandymen.databinding.FragmentMainBinding
-import com.example.exchangeofhandymen.presenter.main.onBoarding.OnboardingItem
+import com.example.exchangeofhandymen.entity.OnboardingItem
 import com.example.exchangeofhandymen.presenter.main.onBoarding.OnboardingItemsAdapter
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,6 +36,7 @@ class MainFragment : Fragment() {
 
     private lateinit var binding: FragmentMainBinding
 
+    private val auth = FirebaseAuth.getInstance()
     private val viewModel: MainViewModel by viewModels { mainViewModelFactory }
 
     override fun onCreateView(
@@ -46,17 +48,25 @@ class MainFragment : Fragment() {
         setupIndicators()
         setCurrentIndicator(0)
 
-        binding.textSkip.setOnClickListener {
+
+        if(auth.currentUser!=null){
             val navOptions: NavOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.mainFragment, true)
                 .build()
-            findNavController().navigate(R.id.action_mainFragment_to_logInFragment,null,navOptions=navOptions)
+
+            val bundle=Bundle()
+            bundle.putBoolean("newUser",false)
+
+            findNavController().navigate(R.id.action_mainFragment_to_homeNavFragment,bundle,navOptions=navOptions)
+        }
+
+
+
+        binding.textSkip.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_logInFragment,null)
         }
         binding.buttonGetStart.setOnClickListener {
-            val navOptions: NavOptions = NavOptions.Builder()
-                .setPopUpTo(R.id.mainFragment, true)
-                .build()
-            findNavController().navigate(R.id.action_mainFragment_to_logInFragment,null,navOptions=navOptions)
+            findNavController().navigate(R.id.action_mainFragment_to_logInFragment,null)
         }
 
 

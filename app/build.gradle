@@ -1,3 +1,4 @@
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
@@ -5,6 +6,7 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
     id 'com.google.gms.google-services'
+    id 'org.jetbrains.kotlin.android.extensions'
 }
 
 android {
@@ -27,6 +29,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    android {
+        androidExtensions {
+            experimental = true
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -72,6 +81,7 @@ dependencies {
     //recycleview
     implementation("androidx.paging:paging-runtime-ktx:3.1.1")
     implementation('androidx.swiperefreshlayout:swiperefreshlayout:1.1.0')
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
 
 
     implementation 'androidx.core:core-ktx:1.8.0'
@@ -117,5 +127,8 @@ dependencies {
     //lotie
 
     implementation "com.airbnb.android:lottie:4.2.1"
+
+
+    implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.1.0'
 
 }

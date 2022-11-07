@@ -1,31 +1,26 @@
 package com.example.exchangeofhandymen.presenter.otp
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.exchangeofhandymen.R
-import com.example.exchangeofhandymen.databinding.FragmentLogInBinding
 import com.example.exchangeofhandymen.databinding.FragmentOtpBinding
-import com.google.firebase.FirebaseException
-import com.google.firebase.FirebaseTooManyRequestsException
+import com.example.exchangeofhandymen.presenter.home.homeNavigation.HomeNavFragment
+import com.example.exchangeofhandymen.presenter.main.MainFragment
 import com.google.firebase.auth.*
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -41,8 +36,6 @@ class OtpFragment : Fragment() {
 
     private val viewModel: OtpViewModel by viewModels { factory }
     private lateinit var binding: FragmentOtpBinding
-    private val auth = FirebaseAuth.getInstance()
-
     private lateinit var OTP: String
     private lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
     private lateinit var phoneNumber: String
@@ -52,15 +45,17 @@ class OtpFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentOtpBinding.inflate(inflater)
-        arguments.let {
+    arguments.let {
             OTP = it?.getString("OTP").toString()
             resendToken = it?.getParcelable("resendToken")!!
-            phoneNumber = it?.getString("phoneNumber")!!
+            phoneNumber = it.getString("phoneNumber")!!
         }
 
 
         binding.resendTextView.setOnClickListener {
             viewModel.resentCode(phoneNumber,resendToken)
+            binding.resendTextView.visibility = View.INVISIBLE
+            binding.resendTextView.isEnabled = false
         }
 
         binding.verifyOTPBtn.setOnClickListener {
@@ -69,11 +64,22 @@ class OtpFragment : Fragment() {
             viewModel.checkCode(OTP,typedOTP)
         }
 
+        binding.backToPhone.setOnClickListener {
+            val navOptions: NavOptions = NavOptions.Builder()
+                .setEnterAnim(R.anim.to_right_in).setExitAnim(R.anim.to_right_out)
+                .build()
+
+            findNavController().navigate(R.id.action_otpFragment_to_logInFragment,null,navOptions=navOptions)
+
+
+        }
+
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             viewModel.state.collect{
                 when(it){
                     is StateOtp.Error -> {
                         binding.otpProgressBar.visibility = View.INVISIBLE
+                        Toast.makeText(getActivity(),it.message,Toast.LENGTH_SHORT).show();
                     }
                     StateOtp.Loading ->{
                         binding.otpProgressBar.visibility = View.VISIBLE
@@ -84,11 +90,15 @@ class OtpFragment : Fragment() {
                         addTextChangeListener()
                         resendOTPTvVisibility()
                     }
-                    StateOtp.SuccessCheck -> {
-                        val navOptions: NavOptions = NavOptions.Builder()
-                            .setPopUpTo(R.id.otpFragment, true)
-                            .build()
-                        findNavController().navigate(R.id.action_otpFragment_to_homeNavFragment2,null,navOptions=navOptions)
+                   is StateOtp.SuccessCheck -> {
+                        val bundle=Bundle()
+                        bundle.putString("phoneNumber",phoneNumber)
+                        bundle.putBoolean("newUser",it.newProfile)
+
+                       val newFragment=HomeNavFragment()
+                       newFragment.arguments=bundle
+                       activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.nav_host_fragment_content_nav,newFragment)?.commit()
+
                         binding.otpProgressBar.visibility = View.INVISIBLE
                     }
                     is StateOtp.SuccessResent -> {
@@ -120,7 +130,7 @@ class OtpFragment : Fragment() {
         Handler(Looper.myLooper()!!).postDelayed(Runnable {
             binding.resendTextView.visibility = View.VISIBLE
             binding.resendTextView.isEnabled = true
-        }, 60000)
+        }, 30000)
     }
 
     private fun addTextChangeListener() {
@@ -155,5 +165,4 @@ class OtpFragment : Fragment() {
         }
 
     }
-
 }

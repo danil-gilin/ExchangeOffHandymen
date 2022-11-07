@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.exchangeofhandymen.R
+import com.example.exchangeofhandymen.entity.OnboardingItem
 
 class OnboardingItemsAdapter(private val onboardingItems: List<OnboardingItem>):
     RecyclerView.Adapter<OnboardingItemsAdapter.OnboardingItemViewHolder>() {

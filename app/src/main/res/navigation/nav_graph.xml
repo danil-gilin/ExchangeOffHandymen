@@ -12,7 +12,18 @@
         tools:layout="@layout/fragment_main" >
         <action
             android:id="@+id/action_mainFragment_to_logInFragment"
-            app:destination="@id/logInFragment" />
+            app:destination="@id/logInFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_mainFragment_to_homeNavFragment"
+            app:destination="@id/homeNavFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/logInFragment"
@@ -21,7 +32,11 @@
         tools:layout="@layout/fragment_log_in" >
         <action
             android:id="@+id/action_logInFragment_to_otpFragment"
-            app:destination="@id/otpFragment" />
+            app:destination="@id/otpFragment"
+            app:enterAnim="@anim/to_left_in"
+            app:exitAnim="@anim/to_left_out"
+            app:popEnterAnim="@anim/to_right_in"
+            app:popExitAnim="@anim/to_right_out" />
     </fragment>
     <fragment
         android:id="@+id/otpFragment"
@@ -29,11 +44,16 @@
         android:label="fragment_otp"
         tools:layout="@layout/fragment_otp" >
         <action
-            android:id="@+id/action_otpFragment_to_logInFragment2"
-            app:destination="@id/logInFragment" />
+            android:id="@+id/action_otpFragment_to_logInFragment"
+            app:destination="@id/logInFragment"
+            app:popUpTo="@id/logInFragment"
+            app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_otpFragment_to_homeNavFragment2"
-            app:destination="@id/homeNavFragment" />
+            android:id="@+id/action_otpFragment_to_homeNavFragment"
+            app:destination="@id/homeNavFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/homeNavFragment"

@@ -1,5 +1,6 @@
 package com.example.exchangeofhandymen.presenter.otp
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.exchangeofhandymen.entity.PhoneAuthResult
@@ -48,8 +49,9 @@ class OtpViewModel  @Inject constructor(private val verificateUseCase: Verificat
             if (typedOTP.isNotEmpty()) {
                 if (typedOTP.length == 6) {
                     val rezult= verificateUseCase.checkCode(credential)
+                    Log.d("otpReacult","$rezult")
                     if (rezult is PhoneAuthResult.VerificationCompleted) {
-                        _state.value=StateOtp.SuccessCheck
+                        _state.value=StateOtp.SuccessCheck(rezult.newProfile)
                     } else {
                         throw CustomException("Error verification")
                     }

@@ -1,4 +1,4 @@
-package com.example.exchangeofhandymen.ui.main.onBoarding
+package com.example.exchangeofhandymen.entity
 
 class OnboardingItem (
     val onboardingImage:Int,

@@ -7,12 +7,43 @@
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.example.exchangeofhandymen.presenter.home.profile.ProfileFragment"
+        android:name="com.example.exchangeofhandymen.presenter.home.profile.profileUser.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_navigation_profile_to_profileEditFragment"
+            app:destination="@id/profileEditFragment"
+            app:enterAnim="@anim/to_bottom_in"
+            app:exitAnim="@anim/state_anim"
+            app:popExitAnim="@anim/to_bottom_out" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_workers"
         android:name="com.example.exchangeofhandymen.presenter.home.workers.WorkersFragment"
         android:label="fragment_workers"
         tools:layout="@layout/fragment_workers" />
+    <fragment
+        android:id="@+id/profileEditFragment"
+        android:name="com.example.exchangeofhandymen.presenter.home.profile.profileEdit.ProfileEditFragment"
+        android:label="fragment_profile_edit"
+        tools:layout="@layout/fragment_profile_edit" >
+        <action
+            android:id="@+id/action_profileEditFragment_to_navigation_profile"
+            app:destination="@id/navigation_profile"
+            app:enterAnim="@anim/to_bottom_out" />
+        <action
+            android:id="@+id/action_profileEditFragment_to_skillsAddFragment"
+            app:destination="@id/skillsAddFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/skillsAddFragment"
+        android:name="com.example.exchangeofhandymen.presenter.home.profile.skillAdd.SkillsAddFragment"
+        android:label="fragment_skills_add"
+        tools:layout="@layout/fragment_skills_add" >
+        <action
+            android:id="@+id/action_skillsAddFragment_to_profileEditFragment"
+            app:destination="@id/profileEditFragment"
+            app:popUpTo="@id/profileEditFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

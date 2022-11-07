@@ -14,8 +14,15 @@ import javax.inject.Inject
 class LogInViewModel @Inject constructor(private val verificateUseCase: VerificateUseCase) :
     ViewModel() {
 
+
+
     private val _state = MutableStateFlow<StateLogIn>(StateLogIn.Start)
     val state = _state.asStateFlow()
+
+    init {
+        _state.value=StateLogIn.Start
+    }
+
 
 
     fun verificate(number: String) {

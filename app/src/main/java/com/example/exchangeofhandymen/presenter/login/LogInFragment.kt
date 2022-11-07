@@ -7,10 +7,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.exchangeofhandymen.R
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.exchangeofhandymen.databinding.FragmentLogInBinding
@@ -41,11 +43,20 @@ class LogInFragment : Fragment() {
         binding = FragmentLogInBinding.inflate(inflater)
         binding.phoneEdit.addTextChangedListener(PhoneNumberFormattingTextWatcher("RU"))
 
-        auth.signOut()
 
         binding.btnLogIn.setOnClickListener {
-            number = binding.phoneEdit.text?.trim().toString()
-            viewModel.verificate(number)
+          try {
+                number = binding.phoneEdit.text?.trim().toString()
+                if(number[0]=='8'){
+                    number=number.drop(1)
+                    Log.d("number_auth", "number"+number)
+                    number="+7"+number
+                    Log.d("number_auth", "number"+number)
+                }
+                viewModel.verificate(number)
+            }catch (e:Exception){
+                //ведите корректный номер
+            }
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
@@ -67,6 +78,8 @@ class LogInFragment : Fragment() {
                         bundle.putString("OTP" ,it.verificationId )
                         bundle.putParcelable("resendToken" , it.token)
                         bundle.putString("phoneNumber" , number)
+
+
                         findNavController().navigate(R.id.action_logInFragment_to_otpFragment,bundle)
                     }
                 }
