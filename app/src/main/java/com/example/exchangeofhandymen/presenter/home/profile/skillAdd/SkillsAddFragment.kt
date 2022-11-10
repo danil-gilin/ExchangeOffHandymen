@@ -1,6 +1,7 @@
 package com.example.exchangeofhandymen.presenter.home.profile.skillAdd
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +9,14 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.exchangeofhandymen.R
 import com.example.exchangeofhandymen.databinding.FragmentSkillsAddBinding
 import com.example.exchangeofhandymen.entity.Skill
 import com.example.exchangeofhandymen.entity.User
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_skills_add.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -61,11 +64,8 @@ class SkillsAddFragment : Fragment() {
                         val bundle = Bundle()
 
                         bundle.putParcelable("user", state.newUser)
-
-                        findNavController().navigate(
-                            R.id.action_skillsAddFragment_to_profileEditFragment,
-                            bundle
-                        )
+                        findNavController().previousBackStackEntry?.savedStateHandle?.set("addFragment", bundle)
+                        findNavController().popBackStack()
                     }
                     is StateSkillsAdd.Success -> {
                         val sortSkills = state.skills?.sortedBy { it.population }?.reversed()
@@ -88,9 +88,25 @@ class SkillsAddFragment : Fragment() {
 
         binding.btnAddSkill.setOnClickListener {
             val skill = Skill("", binding.skillsEditText.text.toString(), 0)
-            viewModel.addSkill(skill, allskill, skillUser,deleteSkill,user)
+            if(skill.name !in deleteSkill.map { it.name }){
+                viewModel.addSkill(skill, allskill, skillUser,deleteSkill,user)
+            }else{
+                val bundle = Bundle()
+                bundle.putParcelable("user", user)
+                bundle.putString("skill", skill.name)
+                findNavController().previousBackStackEntry?.savedStateHandle?.set("addFragment", bundle)
+                findNavController().popBackStack()
+            }
         }
 
+        binding.btnBackSkillAdd.setOnClickListener {
+            val bundle = Bundle()
+
+            bundle.putParcelable("user", user)
+
+            findNavController().previousBackStackEntry?.savedStateHandle?.set("addFragment", bundle)
+            findNavController().popBackStack()
+        }
 
         return binding.root
     }

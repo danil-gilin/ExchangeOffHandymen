@@ -33,7 +33,11 @@
             app:enterAnim="@anim/to_bottom_out" />
         <action
             android:id="@+id/action_profileEditFragment_to_skillsAddFragment"
-            app:destination="@id/skillsAddFragment" />
+            app:destination="@id/skillsAddFragment"
+            app:enterAnim="@anim/to_left_in"
+            app:exitAnim="@anim/to_left_out"
+            app:popEnterAnim="@anim/to_right_in"
+            app:popExitAnim="@anim/to_right_out" />
     </fragment>
     <fragment
         android:id="@+id/skillsAddFragment"
@@ -43,6 +47,7 @@
         <action
             android:id="@+id/action_skillsAddFragment_to_profileEditFragment"
             app:destination="@id/profileEditFragment"
+            app:enterAnim="@anim/to_right_in"
             app:popUpTo="@id/profileEditFragment"
             app:popUpToInclusive="true" />
     </fragment>

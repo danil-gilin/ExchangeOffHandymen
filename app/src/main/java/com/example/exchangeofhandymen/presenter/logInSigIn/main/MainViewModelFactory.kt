@@ -1,4 +1,4 @@
-package com.example.exchangeofhandymen.presenter.main
+package com.example.exchangeofhandymen.presenter.logInSigIn.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presenter.login.LogInFragment">
+    tools:context=".presenter.logInSigIn.login.LogInFragment">
 
     <ImageView
         android:id="@+id/img_log_in_pteview"

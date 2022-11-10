@@ -5,4 +5,10 @@
         <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
 
+
+    <style name="RoundedCornersDialog" parent="@style/Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="dialogCornerRadius">16dp</item>
+
+    </style>
+
 </resources>

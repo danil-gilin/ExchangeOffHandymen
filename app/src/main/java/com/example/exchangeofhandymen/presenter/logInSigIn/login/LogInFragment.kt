@@ -1,4 +1,4 @@
-package com.example.exchangeofhandymen.presenter.login
+package com.example.exchangeofhandymen.presenter.logInSigIn.login
 
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
@@ -78,7 +78,6 @@ class LogInFragment : Fragment() {
                         bundle.putString("OTP" ,it.verificationId )
                         bundle.putParcelable("resendToken" , it.token)
                         bundle.putString("phoneNumber" , number)
-
 
                         findNavController().navigate(R.id.action_logInFragment_to_otpFragment,bundle)
                     }

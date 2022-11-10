@@ -1,4 +1,4 @@
-package com.example.exchangeofhandymen.presenter.otp
+package com.example.exchangeofhandymen.presenter.logInSigIn.otp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

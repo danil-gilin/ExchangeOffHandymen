@@ -1,4 +1,4 @@
-package com.example.exchangeofhandymen.presenter.otp
+package com.example.exchangeofhandymen.presenter.logInSigIn.otp
 
 import android.os.Bundle
 import android.os.Handler
@@ -18,7 +18,7 @@ import com.bumptech.glide.Glide
 import com.example.exchangeofhandymen.R
 import com.example.exchangeofhandymen.databinding.FragmentOtpBinding
 import com.example.exchangeofhandymen.presenter.home.homeNavigation.HomeNavFragment
-import com.example.exchangeofhandymen.presenter.main.MainFragment
+import com.example.exchangeofhandymen.presenter.logInSigIn.main.MainFragment
 import com.google.firebase.auth.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

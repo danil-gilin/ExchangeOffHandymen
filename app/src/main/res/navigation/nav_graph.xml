@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.exchangeofhandymen.presenter.main.MainFragment"
+        android:name="com.example.exchangeofhandymen.presenter.logInSigIn.main.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/logInFragment"
-        android:name="com.example.exchangeofhandymen.presenter.login.LogInFragment"
+        android:name="com.example.exchangeofhandymen.presenter.logInSigIn.login.LogInFragment"
         android:label="fragment_log_in"
         tools:layout="@layout/fragment_log_in" >
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/otpFragment"
-        android:name="com.example.exchangeofhandymen.presenter.otp.OtpFragment"
+        android:name="com.example.exchangeofhandymen.presenter.logInSigIn.otp.OtpFragment"
         android:label="fragment_otp"
         tools:layout="@layout/fragment_otp" >
         <action
@@ -58,5 +58,9 @@
     <fragment
         android:id="@+id/homeNavFragment"
         android:name="com.example.exchangeofhandymen.presenter.home.homeNavigation.HomeNavFragment"
-        android:label="HomeNavFragment" />
+        android:label="HomeNavFragment" >
+        <action
+            android:id="@+id/action_homeNavFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+    </fragment><action android:id="@+id/action_global_homeNavFragment" app:destination="@id/homeNavFragment"/><action android:id="@+id/action_global_logInFragment3" app:destination="@id/logInFragment"/>
 </navigation>

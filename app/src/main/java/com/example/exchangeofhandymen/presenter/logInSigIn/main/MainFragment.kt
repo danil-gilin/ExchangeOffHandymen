@@ -1,4 +1,4 @@
-package com.example.exchangeofhandymen.presenter.main
+package com.example.exchangeofhandymen.presenter.logInSigIn.main
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,13 +11,16 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.example.exchangeofhandymen.MainActivity
 import com.example.exchangeofhandymen.R
 import com.example.exchangeofhandymen.databinding.FragmentMainBinding
 import com.example.exchangeofhandymen.entity.OnboardingItem
-import com.example.exchangeofhandymen.presenter.main.onBoarding.OnboardingItemsAdapter
+import com.example.exchangeofhandymen.presenter.logInSigIn.main.onBoarding.OnboardingItemsAdapter
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -56,6 +59,8 @@ class MainFragment : Fragment() {
 
             val bundle=Bundle()
             bundle.putBoolean("newUser",false)
+
+
 
             findNavController().navigate(R.id.action_mainFragment_to_homeNavFragment,bundle,navOptions=navOptions)
         }
@@ -101,6 +106,12 @@ class MainFragment : Fragment() {
             }
         }
 
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        binding.oneBoardingViewPager.setCurrentItem(0,false)
     }
 
     private fun setupIndicators(){

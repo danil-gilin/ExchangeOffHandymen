@@ -1,4 +1,4 @@
-package com.example.exchangeofhandymen.presenter.login
+package com.example.exchangeofhandymen.presenter.logInSigIn.login
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -20,7 +20,7 @@ class LogInViewModel @Inject constructor(private val verificateUseCase: Verifica
     val state = _state.asStateFlow()
 
     init {
-        _state.value=StateLogIn.Start
+        _state.value= StateLogIn.Start
     }
 
 

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+<item>
+    <shape xmlns:android="http://schemas.android.com/apk/res/android">
+        <size
+            android:width="100dp"
+            android:height="100dp" />
+        <solid android:color="@color/custom_color_primary_light"/>
+        <corners android:radius="8dp"/>
+    </shape>
+</item>
+ <item android:drawable="@drawable/ic_baseline_add_24"
+     android:gravity="center"
+     android:width="35dp"
+     android:height="35dp"
+     >
+
+ </item>
+</layer-list>

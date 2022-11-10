@@ -1,4 +1,4 @@
-package com.example.exchangeofhandymen.presenter.main.onBoarding
+package com.example.exchangeofhandymen.presenter.logInSigIn.main.onBoarding
 
 import android.view.LayoutInflater
 import android.view.View

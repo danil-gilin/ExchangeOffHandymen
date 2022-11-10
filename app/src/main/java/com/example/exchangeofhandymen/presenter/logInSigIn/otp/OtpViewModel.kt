@@ -1,4 +1,4 @@
-package com.example.exchangeofhandymen.presenter.otp
+package com.example.exchangeofhandymen.presenter.logInSigIn.otp
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -22,26 +22,26 @@ class OtpViewModel  @Inject constructor(private val verificateUseCase: Verificat
 
     fun resentCode(number: String,token: PhoneAuthProvider.ForceResendingToken){
         viewModelScope.launch {
-            _state.value=StateOtp.Loading
+            _state.value= StateOtp.Loading
             try {
                val rezult= verificateUseCase.resendVerification(number, token)
                 if (rezult is PhoneAuthResult.CodeSent) {
                     if (rezult.token != null)
-                        _state.value=StateOtp.SuccessResent(rezult.verificationId, rezult.token)
+                        _state.value= StateOtp.SuccessResent(rezult.verificationId, rezult.token)
                     else
                         throw CustomException("Error verification")
                 } else {
                     throw CustomException("Error verification")
                 }
             }catch (e:Exception){
-                _state.value=StateOtp.Error(e.message.toString())
+                _state.value= StateOtp.Error(e.message.toString())
             }
         }
     }
 
     fun checkCode(otp: String,typedOTP:String){
         viewModelScope.launch {
-            _state.value=StateOtp.Loading
+            _state.value= StateOtp.Loading
             try {
             val credential: PhoneAuthCredential = PhoneAuthProvider.getCredential(
                 otp, typedOTP
@@ -51,7 +51,7 @@ class OtpViewModel  @Inject constructor(private val verificateUseCase: Verificat
                     val rezult= verificateUseCase.checkCode(credential)
                     Log.d("otpReacult","$rezult")
                     if (rezult is PhoneAuthResult.VerificationCompleted) {
-                        _state.value=StateOtp.SuccessCheck(rezult.newProfile)
+                        _state.value= StateOtp.SuccessCheck(rezult.newProfile)
                     } else {
                         throw CustomException("Error verification")
                     }
@@ -62,7 +62,7 @@ class OtpViewModel  @Inject constructor(private val verificateUseCase: Verificat
                 throw CustomException("Please Enter OTP")
             }
             }catch (e:Exception){
-                _state.value=StateOtp.Error(e.message.toString())
+                _state.value= StateOtp.Error(e.message.toString())
             }
         }
     }

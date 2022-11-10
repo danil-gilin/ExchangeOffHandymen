@@ -1,14 +1,19 @@
 package com.example.exchangeofhandymen.presenter.home.profile.profileUser
 
+import android.graphics.drawable.Drawable
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.exchangeofhandymen.R
 import com.example.exchangeofhandymen.databinding.FragmentProfileBinding
 import com.example.exchangeofhandymen.entity.User
@@ -17,6 +22,7 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -25,7 +31,6 @@ class ProfileFragment : Fragment() {
     companion object {
         fun newInstance() = ProfileFragment()
     }
-
 
 
     @Inject
@@ -47,6 +52,7 @@ class ProfileFragment : Fragment() {
 
 
         binding= FragmentProfileBinding.inflate(inflater)
+
         val layoutManager=FlexboxLayoutManager(requireContext())
 
         binding.rcSkills.layoutManager=layoutManager
@@ -65,6 +71,7 @@ class ProfileFragment : Fragment() {
                 when(it){
                     StateProfile.Loading ->{
                       binding.progressProfile.visibility=View.VISIBLE
+                        binding.btnEdit.isEnabled=false
                     }
                     StateProfile.Start -> {
                         binding.progressProfile.visibility=View.GONE
@@ -73,11 +80,32 @@ class ProfileFragment : Fragment() {
                         binding.progressProfile.visibility=View.GONE
                         user=it.user
                         binding.txtNameUser.text=it.user.name
-                        binding.ratingUser.rating= it.user.rating?.toFloat()!!
+                        if(it.user.rating?.toFloat()!=null){
+                            binding.ratingUser.rating= it.user.rating?.toFloat()!!
+                        }
+                        if(user?.wokerFlag == true){
+                            if(user!!.img.isEmpty()){
+                                Glide.with( binding.imgUserAvatar).load(R.drawable.worker_icon).circleCrop().into( binding.imgUserAvatar)
+                            }else{
+                                Glide.with( binding.imgUserAvatar).load(user!!.img).circleCrop().into( binding.imgUserAvatar)
+                            }
+                        }else{
+                            if(user!!.img.isEmpty()){
+                                Glide.with( binding.imgUserAvatar).load(R.drawable.employer_icon).circleCrop().into( binding.imgUserAvatar)
+                            }else{
+                                Glide.with( binding.imgUserAvatar).load(user!!.img).circleCrop().into( binding.imgUserAvatar)
+                            }
+                        }
+                        binding.imgUserAvatar
                         adapter.submitList(it.skills)
                         binding.txtPhoneUser.text=it.user.phone
                         binding.txtDescriptionUser.text=it.user.description
                         binding.txtMailUser.text=it.user.email
+                        if(it.user.geoPoint!=null){
+                            binding.txtGeoUser.text=getTownGeo(it.user.geoPoint.latitude,it.user.geoPoint.longitude)
+                        }
+
+                        binding.btnEdit.isEnabled=true
                     }
                     StateProfile.Error -> {
                         binding.progressProfile.visibility=View.GONE
@@ -88,5 +116,16 @@ class ProfileFragment : Fragment() {
 
 
         return binding.root
+    }
+
+
+    private fun getTownGeo(lat: Double, lon: Double):String {
+        try {
+            val geocoder = Geocoder(requireContext(), Locale("Ru"))
+            val addresses: List<Address> = geocoder.getFromLocation(lat, lon, 1)
+            return addresses.get(0).locality
+        }catch (e:Exception){
+            return ""
+        }
     }
 }
