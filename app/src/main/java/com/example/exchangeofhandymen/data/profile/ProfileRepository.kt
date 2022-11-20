@@ -45,5 +45,7 @@ class ProfileRepository @Inject constructor() {
             .await()
     }
 
-
+    suspend fun getProfileIsWorker():Boolean{
+      return dbFirestoreProfile.collection("User").document(auth.currentUser?.uid.toString()).get().await().get("wokerFlag") as Boolean
+    }
 }

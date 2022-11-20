@@ -24,10 +24,12 @@ class LoginRepository @Inject constructor(@ActivityContext private val activity:
         suspendCoroutine{cont->
                 val callback = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                     override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+                        Log.d("number_auth", "number 228")
                         cont.resume(PhoneAuthResult.VerificationCompleted(credential))
                     }
 
                     override fun onVerificationFailed(e: FirebaseException) {
+                        Log.d("number_auth", "number 1488")
                         cont.resume(PhoneAuthResult.CodeSent("",null))
                     }
 
@@ -35,16 +37,18 @@ class LoginRepository @Inject constructor(@ActivityContext private val activity:
                         verificationId: String,
                         token: PhoneAuthProvider.ForceResendingToken
                     ) {
+                        Log.d("number_auth", "number 337")
                         cont.resume(PhoneAuthResult.CodeSent(verificationId,token))
                     }
                 }
 
                 val options = PhoneAuthOptions.newBuilder(auth)
                     .setPhoneNumber(number)
-                    .setTimeout(60L, TimeUnit.SECONDS)
+                    .setTimeout(30L, TimeUnit.SECONDS)
                     .setActivity(activity as Activity)
                     .setCallbacks(callback)
                     .build()
+
 
                 PhoneAuthProvider.verifyPhoneNumber(options)
         }
@@ -83,13 +87,7 @@ class LoginRepository @Inject constructor(@ActivityContext private val activity:
             auth.signInWithCredential(credential)
                 .addOnCompleteListener(activity as Activity) { task ->
                     if (task.isSuccessful) {
-                        if (auth.currentUser != null) {
-                            if (auth.currentUser?.metadata?.creationTimestamp == auth.currentUser?.metadata?.lastSignInTimestamp) {
-                                cont.resume(PhoneAuthResult.VerificationCompleted(credential,true))
-                            }else{
                                 cont.resume(PhoneAuthResult.VerificationCompleted(credential))
-                            }
-                        }
                     } else {
                         cont.resume(PhoneAuthResult.ErrorCode())
                         Log.d("TAG", "signInWithPhoneAuthCredential: ${task.exception.toString()}")

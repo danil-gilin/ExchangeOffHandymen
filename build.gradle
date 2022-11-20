@@ -3,7 +3,9 @@
 buildscript {
     repositories {
         google()
+
         mavenCentral()
+        maven { url "https://raw.githubusercontent.com/hyperax/Android-NumberEditText/master/maven-repo" }
     }
     dependencies {
         classpath 'com.google.dagger:hilt-android-gradle-plugin:2.38.1'

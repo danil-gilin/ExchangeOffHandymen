@@ -69,6 +69,7 @@ class LogInFragment : Fragment() {
                         Log.d("number_auth", "onVerificationCompleted 2")
                     }
                     StateLogIn.Start -> {
+                        binding.phoneEdit.setText("")
                         Glide.with(binding.imgLogInPteview.context).load(R.drawable.log_in_preview).centerInside().into(binding.imgLogInPteview)
                         Log.d("number_auth", "onVerificationCompleted 3")
                     }
@@ -78,7 +79,7 @@ class LogInFragment : Fragment() {
                         bundle.putString("OTP" ,it.verificationId )
                         bundle.putParcelable("resendToken" , it.token)
                         bundle.putString("phoneNumber" , number)
-
+                       viewModel.initViewModel()
                         findNavController().navigate(R.id.action_logInFragment_to_otpFragment,bundle)
                     }
                 }

@@ -6,17 +6,20 @@ import androidx.lifecycle.viewModelScope
 import com.example.exchangeofhandymen.entity.PhoneAuthResult
 import com.example.exchangeofhandymen.domain.VerificateUseCase
 import com.example.exchangeofhandymen.entity.CustomException
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.resume
 
 class OtpViewModel  @Inject constructor(private val verificateUseCase: VerificateUseCase): ViewModel() {
 
     private val _state = MutableStateFlow<StateOtp>(StateOtp.Start)
     val state = _state.asStateFlow()
+    val auth=FirebaseAuth.getInstance()
 
 
 
@@ -49,9 +52,15 @@ class OtpViewModel  @Inject constructor(private val verificateUseCase: Verificat
             if (typedOTP.isNotEmpty()) {
                 if (typedOTP.length == 6) {
                     val rezult= verificateUseCase.checkCode(credential)
-                    Log.d("otpReacult","$rezult")
+
                     if (rezult is PhoneAuthResult.VerificationCompleted) {
-                        _state.value= StateOtp.SuccessCheck(rezult.newProfile)
+                        Log.d("NewuserLog",auth.currentUser?.metadata?.creationTimestamp.toString())
+                        Log.d("NewuserLog",auth.currentUser?.metadata?.lastSignInTimestamp.toString())
+                        if (auth.currentUser?.metadata?.creationTimestamp == auth.currentUser?.metadata?.lastSignInTimestamp) {
+                            _state.value= StateOtp.SuccessCheck(true)
+                        }else{
+                            _state.value= StateOtp.SuccessCheck(false)
+                        }
                     } else {
                         throw CustomException("Error verification")
                     }

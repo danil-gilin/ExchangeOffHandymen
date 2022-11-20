@@ -3,52 +3,90 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigate_home"
-    app:startDestination="@id/navigation_workers">
+    app:startDestination="@id/navigation_workers_nested_graph">
 
-    <fragment
-        android:id="@+id/navigation_profile"
-        android:name="com.example.exchangeofhandymen.presenter.home.profile.profileUser.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
-        <action
-            android:id="@+id/action_navigation_profile_to_profileEditFragment"
-            app:destination="@id/profileEditFragment"
-            app:enterAnim="@anim/to_bottom_in"
-            app:exitAnim="@anim/state_anim"
-            app:popExitAnim="@anim/to_bottom_out" />
-    </fragment>
-    <fragment
-        android:id="@+id/navigation_workers"
-        android:name="com.example.exchangeofhandymen.presenter.home.workers.WorkersFragment"
-        android:label="fragment_workers"
-        tools:layout="@layout/fragment_workers" />
-    <fragment
-        android:id="@+id/profileEditFragment"
-        android:name="com.example.exchangeofhandymen.presenter.home.profile.profileEdit.ProfileEditFragment"
-        android:label="fragment_profile_edit"
-        tools:layout="@layout/fragment_profile_edit" >
-        <action
-            android:id="@+id/action_profileEditFragment_to_navigation_profile"
-            app:destination="@id/navigation_profile"
-            app:enterAnim="@anim/to_bottom_out" />
-        <action
-            android:id="@+id/action_profileEditFragment_to_skillsAddFragment"
-            app:destination="@id/skillsAddFragment"
-            app:enterAnim="@anim/to_left_in"
-            app:exitAnim="@anim/to_left_out"
-            app:popEnterAnim="@anim/to_right_in"
-            app:popExitAnim="@anim/to_right_out" />
-    </fragment>
-    <fragment
-        android:id="@+id/skillsAddFragment"
-        android:name="com.example.exchangeofhandymen.presenter.home.profile.skillAdd.SkillsAddFragment"
-        android:label="fragment_skills_add"
-        tools:layout="@layout/fragment_skills_add" >
-        <action
-            android:id="@+id/action_skillsAddFragment_to_profileEditFragment"
-            app:destination="@id/profileEditFragment"
-            app:enterAnim="@anim/to_right_in"
-            app:popUpTo="@id/profileEditFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
+    <navigation android:id="@+id/navigation_profile_nested_graph"
+        app:startDestination="@id/navigation_profile">
+        <fragment
+            android:id="@+id/navigation_profile"
+            android:name="com.example.exchangeofhandymen.presenter.home.profile.profileUser.ProfileFragment"
+            android:label="fragment_profile"
+            tools:layout="@layout/fragment_profile">
+            <action
+                android:id="@+id/action_navigation_profile_to_profileEditFragment"
+                app:destination="@id/profileEditFragment"
+                app:enterAnim="@anim/to_bottom_in"
+                app:exitAnim="@anim/state_anim"
+                app:popExitAnim="@anim/to_bottom_out" />
+        </fragment>
+        <fragment
+            android:id="@+id/profileEditFragment"
+            android:name="com.example.exchangeofhandymen.presenter.home.profile.profileEdit.ProfileEditFragment"
+            android:label="fragment_profile_edit"
+            tools:layout="@layout/fragment_profile_edit">
+            <action
+                android:id="@+id/action_profileEditFragment_to_skillsAddFragment"
+                app:destination="@id/skillsAddFragment"
+                app:enterAnim="@anim/to_left_in"
+                app:exitAnim="@anim/to_left_out"
+                app:popEnterAnim="@anim/to_right_in"
+                app:popExitAnim="@anim/to_right_out" />
+        </fragment>
+        <fragment
+            android:id="@+id/skillsAddFragment"
+            android:name="com.example.exchangeofhandymen.presenter.home.profile.skillAdd.SkillsAddFragment"
+            android:label="fragment_skills_add"
+            tools:layout="@layout/fragment_skills_add"/>
+    </navigation>
+    <navigation android:id="@+id/navigation_bag_nested_graph"
+        app:startDestination="@id/navigation_bag">
+        <fragment
+            android:id="@+id/navigation_bag"
+            android:name="com.example.exchangeofhandymen.presenter.home.bag.listJob.BagFragment"
+            android:label="fragment_bag"
+            tools:layout="@layout/fragment_bag">
+            <action
+                android:id="@+id/action_navigation_bag_to_newJobFragment"
+                app:destination="@id/newJobFragment" />
+            <action
+                android:id="@+id/action_navigation_bag_to_jobInfoFragment"
+                app:destination="@id/jobInfoFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/newJobFragment"
+            android:name="com.example.exchangeofhandymen.presenter.home.bag.newJob.NewJobFragment"
+            android:label="fragment_new_job"
+            tools:layout="@layout/fragment_new_job" />
+        <fragment
+            android:id="@+id/jobInfoFragment"
+            android:name="com.example.exchangeofhandymen.presenter.home.bag.jobInfoFragment.JobInfoFragment"
+            android:label="fragment_job_info"
+            tools:layout="@layout/fragment_job_info" />
+    </navigation>
+    <navigation android:id="@+id/navigation_workers_nested_graph"
+        app:startDestination="@id/navigation_workers">
+        <fragment
+            android:id="@+id/jobSelecetFragment"
+            android:name="com.example.exchangeofhandymen.presenter.home.workers.jobSelect.JobSelecetFragment"
+            android:label="fragment_job_selecet"
+            tools:layout="@layout/fragment_job_selecet" />
+        <fragment
+            android:id="@+id/workerProfileFragment"
+            android:name="com.example.exchangeofhandymen.presenter.home.workers.workerProfile.WorkerProfileFragment"
+            android:label="fragment_worker_profile"
+            tools:layout="@layout/fragment_worker_profile">
+            <action
+                android:id="@+id/action_workerProfileFragment_to_jobSelecetFragment"
+                app:destination="@id/jobSelecetFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/navigation_workers"
+            android:name="com.example.exchangeofhandymen.presenter.home.workers.workersList.WorkersFragment"
+            android:label="fragment_workers"
+            tools:layout="@layout/fragment_workers">
+            <action
+                android:id="@+id/action_navigation_workers_to_workerProfileFragment"
+                app:destination="@id/workerProfileFragment" />
+        </fragment><action android:id="@+id/action_global_workerProfileFragment" app:destination="@id/workerProfileFragment"/>
+    </navigation>
 </navigation>

@@ -1,6 +1,7 @@
 package com.example.exchangeofhandymen.presenter.home.homeNavigation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -40,10 +41,10 @@ class HomeNavFragment : Fragment() {
     ): View? {
         binding = FragmentHomeNavBinding.inflate(inflater)
 
-
         arguments.let {
             phoneNumber = it?.getString("phoneNumber").toString()
             newProfile = it?.getBoolean("newUser") == true
+            Log.d("DialogFragmetCheck",newProfile.toString())
         }
 
         val navView: BottomNavigationView = binding.navView
@@ -57,13 +58,40 @@ class HomeNavFragment : Fragment() {
             val manager = childFragmentManager
             myDialogFragment.show(manager, "myDialog")
             childFragmentManager.setFragmentResultListener("Dialog_rezult", this) { key, bundle ->
+                Log.d("DialogFragmetCheck","go")
                 worker = bundle.getBoolean("dialog_key")
+                viewModel.checkUser(auth.currentUser, phoneNumber, worker)
             }
-            viewModel.checkUser(auth.currentUser, phoneNumber, worker)
         }
 
+        val options = NavOptions.Builder()
+            .setLaunchSingleTop(true)
+            .setEnterAnim(androidx.navigation.ui.R.anim.nav_default_enter_anim)
+            .setExitAnim(androidx.navigation.ui.R.anim.nav_default_exit_anim)
+            .setPopEnterAnim( androidx.navigation.ui.R.anim.nav_default_pop_enter_anim)
+            .setPopExitAnim(androidx.navigation.ui.R.anim.nav_default_pop_exit_anim)
+            .setPopUpTo(navController.graph.startDestinationId, false)
+            .build()
 
         navView.setupWithNavController(navController)
+
+        navView.setOnItemSelectedListener {
+         val id=it.itemId
+            when(id){
+                R.id.navigation_profile_nested_graph->{
+                    navController.navigate( R.id.navigation_profile_nested_graph,null,options)
+                }
+                R.id.navigation_bag_nested_graph->{
+                    navController.navigate(R.id.navigation_bag_nested_graph,null,options)
+                }
+                R.id.navigation_workers_nested_graph->{
+                    navController.navigate(R.id.navigation_workers_nested_graph,null,options)
+                }
+
+            }
+            return@setOnItemSelectedListener true
+        }
+
 
 
         return binding.root

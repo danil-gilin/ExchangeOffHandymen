@@ -3,13 +3,19 @@
 
 
     <item
-        android:id="@+id/navigation_workers"
+        android:id="@+id/navigation_workers_nested_graph"
         android:icon="@drawable/ic_workers_bottom_nav"
         android:title="@string/title_workers_bottom_nav" />
 
 
     <item
-        android:id="@+id/navigation_profile"
+        android:id="@+id/navigation_bag_nested_graph"
+        android:icon="@drawable/ic_baseline_business_center_24"
+        android:title="@string/title_bag_bottom_nav" />
+
+
+    <item
+        android:id="@+id/navigation_profile_nested_graph"
         android:icon="@drawable/ic_profile_bottom_nav"
         android:title="@string/title_profile_bottom_nav" />
 

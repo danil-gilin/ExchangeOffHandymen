@@ -102,7 +102,7 @@ class ProfileFragment : Fragment() {
                         binding.txtDescriptionUser.text=it.user.description
                         binding.txtMailUser.text=it.user.email
                         if(it.user.geoPoint!=null){
-                            binding.txtGeoUser.text=getTownGeo(it.user.geoPoint.latitude,it.user.geoPoint.longitude)
+                            binding.txtGeoUser.text=user!!.geoPoint!!.getTownName(requireContext())
                         }
 
                         binding.btnEdit.isEnabled=true
@@ -116,16 +116,5 @@ class ProfileFragment : Fragment() {
 
 
         return binding.root
-    }
-
-
-    private fun getTownGeo(lat: Double, lon: Double):String {
-        try {
-            val geocoder = Geocoder(requireContext(), Locale("Ru"))
-            val addresses: List<Address> = geocoder.getFromLocation(lat, lon, 1)
-            return addresses.get(0).locality
-        }catch (e:Exception){
-            return ""
-        }
     }
 }

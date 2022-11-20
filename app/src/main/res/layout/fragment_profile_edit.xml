@@ -204,12 +204,15 @@
 
                 <ImageView
                     android:id="@+id/btn_geo"
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="8dp"
+                    android:clickable="true"
+                    android:elevation="5dp"
+                    android:background="@drawable/ripple_geo"
                     android:src="@drawable/geo_position_btn_background" />
             </LinearLayout>
 

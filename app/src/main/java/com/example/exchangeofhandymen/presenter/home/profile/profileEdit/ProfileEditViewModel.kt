@@ -113,7 +113,7 @@ class ProfileEditViewModel @Inject constructor(
            _state.value = ProfEditState.Loading
            try {
                val url = savePhotoUseCase.savePhoto(uri)
-               _state.value = ProfEditState.SuccessSavePhoto(url)
+               _state.value = ProfEditState.SuccessPhoto(url)
            }catch (e:Exception){
                _state.value = ProfEditState.Error(null,null,null)
            }
@@ -125,7 +125,7 @@ class ProfileEditViewModel @Inject constructor(
             _state.value = ProfEditState.Loading
             try {
                 deletePhotoUseCase.deletePhoto()
-                _state.value = ProfEditState.SuccessSavePhoto("")
+                _state.value = ProfEditState.SuccessPhoto("")
             }catch (e:Exception){
                 _state.value = ProfEditState.Error(null,null,null)
             }
@@ -176,7 +176,5 @@ class ProfileEditViewModel @Inject constructor(
         }
     }
 
-    companion object {
-        fun newInstance() = ProfileEditFragment()
-    }
+
 }

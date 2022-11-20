@@ -9,15 +9,13 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_ExchangeOfHandymen)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         var navHostFragment= supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_nav) as NavHostFragment
         var navController = navHostFragment.navController
-
     }
 }

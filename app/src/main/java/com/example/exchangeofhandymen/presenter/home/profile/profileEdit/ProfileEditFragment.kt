@@ -7,10 +7,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -23,23 +20,22 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.exchangeofhandymen.R
 import com.example.exchangeofhandymen.databinding.FragmentProfileEditBinding
-import com.example.exchangeofhandymen.entity.GeoPosition
 
+import com.example.exchangeofhandymen.entity.GeoPosition
 import com.example.exchangeofhandymen.entity.Skill
 import com.example.exchangeofhandymen.entity.User
+import com.example.exchangeofhandymen.presenter.home.homeNavigation.HomeNavFragment
 import com.example.exchangeofhandymen.presenter.home.profile.profileUser.profileAdapter.SkillsAdapter
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.dialog_woker.view.*
 import kotlinx.android.synthetic.main.fragment_profile_edit.*
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 
 @AndroidEntryPoint
@@ -152,11 +148,12 @@ class ProfileEditFragment : Fragment() {
                       binding.progressBarEdit.visibility=View.GONE
                       findNavController().popBackStack()
                   }
-                  is ProfEditState.SuccessSavePhoto -> {
+                  is ProfEditState.SuccessPhoto -> {
                       binding.descriptionEditLayout.error=null
                       binding.mailEditLayout.error=null
                       binding.nameEditLayout.error=null
                       binding.progressBarEdit.visibility=View.GONE
+                      Log.d("PHOTODELETE",it.PhotoUrl)
                       uriAvatar=it.PhotoUrl
                       if(it.PhotoUrl.isEmpty()) {
                           binding.imgUserAvatarEdit.setImageResource(R.drawable.backgrounf_img)
@@ -167,7 +164,7 @@ class ProfileEditFragment : Fragment() {
                       binding.descriptionEditLayout.error=null
                       binding.mailEditLayout.error=null
                       binding.nameEditLayout.error=null
-                      binding.txtGeoPositionGet.text= getTownGeo(it.lat, it.lon)
+                      binding.txtGeoPositionGet.text= GeoPosition(it.lat, it.lon).getTownName(requireContext())
                       userGeo=GeoPosition(it.lat,it.lon)
                   }
                   is ProfEditState.ErrorCustom -> {
@@ -228,11 +225,6 @@ class ProfileEditFragment : Fragment() {
     }
 
 
-    private fun getTownGeo(lat: Double, lon: Double):String {
-        val geocoder = Geocoder(requireContext(), Locale("Ru"))
-        val addresses:List<Address> = geocoder.getFromLocation(lat, lon, 1)
-        return addresses.get(0).locality
-    }
 
     private fun checkWorkerFlag():Boolean {
         return binding.workerRadioGroup.checkedRadioButtonId ==binding.radioBtnWoker.id
@@ -250,10 +242,9 @@ class ProfileEditFragment : Fragment() {
             }
             viewModel.gettSkills(user!!.skills)
             uriAvatar=user!!.img
-            Log.d("GeoBundle",user!!.geoPoint.toString())
             userGeo= user!!.geoPoint
             if(userGeo!=null){
-                binding.txtGeoPositionGet.text=getTownGeo(userGeo!!.latitude,userGeo!!.longitude)
+                binding.txtGeoPositionGet.text=userGeo!!.getTownName(requireContext())
             }
 
             if(user!!.img.isEmpty()){
@@ -268,6 +259,9 @@ class ProfileEditFragment : Fragment() {
     private fun init(){
         binding.skillsEdit.adapter=adapter
         binding.skillsEdit.layoutManager=FlexboxLayoutManager(requireContext())
+
+        activity!!.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
+
 
         binding.descriptionEdit.setOnTouchListener { view, event ->
             view.parent.requestDisallowInterceptTouchEvent(true)

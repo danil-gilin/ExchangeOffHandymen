@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.dialog_woker.view.*
 
 class WorkerDialogFragment :DialogFragment() {
 
+   private var flagWorker=true
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -22,19 +23,25 @@ class WorkerDialogFragment :DialogFragment() {
     ): View? {
         var rootView:View=inflater.inflate(R.layout.dialog_woker,null,false)
 
+
         rootView.btn_woker.setOnClickListener {
-           parentFragmentManager.setFragmentResult("Dialog_rezult", bundleOf("dialog_key" to true))
             dismiss()
         }
 
         rootView.btn_employer.setOnClickListener {
-            parentFragmentManager.setFragmentResult("Dialog_rezult", bundleOf("dialog_key" to false))
+            flagWorker=false
             dismiss()
         }
 
 
         return rootView
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        parentFragmentManager.setFragmentResult("Dialog_rezult", bundleOf("dialog_key" to flagWorker))
+    }
+
 
     override fun getTheme(): Int =R.style.RoundedCornersDialog
 

@@ -5,9 +5,11 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,8 +19,6 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.exchangeofhandymen.R
 import com.example.exchangeofhandymen.databinding.FragmentOtpBinding
-import com.example.exchangeofhandymen.presenter.home.homeNavigation.HomeNavFragment
-import com.example.exchangeofhandymen.presenter.logInSigIn.main.MainFragment
 import com.google.firebase.auth.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -45,6 +45,9 @@ class OtpFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentOtpBinding.inflate(inflater)
+
+       activity!!.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
     arguments.let {
             OTP = it?.getString("OTP").toString()
             resendToken = it?.getParcelable("resendToken")!!
@@ -63,15 +66,15 @@ class OtpFragment : Fragment() {
                         + binding.otpEditText4.text.toString() + binding.otpEditText5.text.toString() + binding.otpEditText6.text.toString())
             viewModel.checkCode(OTP,typedOTP)
         }
+        val fm = activity!!.supportFragmentManager
+
+        Log.i("GOOtp", "Found fragment: " + fm.backStackEntryCount)
+        for (entry in 0 until fm.backStackEntryCount) {
+            Log.i("GOOtp", "Found fragment: " + fm.getBackStackEntryAt(entry).id)
+        }
 
         binding.backToPhone.setOnClickListener {
-            val navOptions: NavOptions = NavOptions.Builder()
-                .setEnterAnim(R.anim.to_right_in).setExitAnim(R.anim.to_right_out)
-                .build()
-
-            findNavController().navigate(R.id.action_otpFragment_to_logInFragment,null,navOptions=navOptions)
-
-
+            findNavController().popBackStack()
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
@@ -91,14 +94,14 @@ class OtpFragment : Fragment() {
                         resendOTPTvVisibility()
                     }
                    is StateOtp.SuccessCheck -> {
+                       val navOptions: NavOptions = NavOptions.Builder()
+                           .setPopUpTo(R.id.mainFragment, true)
+                           .build()
                         val bundle=Bundle()
                         bundle.putString("phoneNumber",phoneNumber)
                         bundle.putBoolean("newUser",it.newProfile)
-
-                       val newFragment=HomeNavFragment()
-                       newFragment.arguments=bundle
-                       activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.nav_host_fragment_content_nav,newFragment)?.commit()
-
+                       Log.d("DialogFragmetCheck",it.newProfile.toString())
+                      findNavController().navigate(R.id.action_otpFragment_to_homeNavFragment,bundle,navOptions=navOptions)
                         binding.otpProgressBar.visibility = View.INVISIBLE
                     }
                     is StateOtp.SuccessResent -> {

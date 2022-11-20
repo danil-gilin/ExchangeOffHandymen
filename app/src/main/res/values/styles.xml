@@ -11,4 +11,19 @@
 
     </style>
 
+    <style name="SelectableItemTheme">
+        <item name="colorControlHighlight">@color/custom_color_primary_light</item>
+
+    </style>
+
+    <style name="SelectableItemBackground">
+        <item name="android:theme">@style/SelectableItemTheme</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="Theme.ExchangeOfHandymen.SplashTheme">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
+
+
 </resources>

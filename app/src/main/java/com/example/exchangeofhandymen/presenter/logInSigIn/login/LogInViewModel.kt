@@ -24,6 +24,9 @@ class LogInViewModel @Inject constructor(private val verificateUseCase: Verifica
     }
 
 
+    fun initViewModel(){
+        _state.value= StateLogIn.Start
+    }
 
     fun verificate(number: String) {
         viewModelScope.launch {
@@ -34,7 +37,6 @@ class LogInViewModel @Inject constructor(private val verificateUseCase: Verifica
                     if (number.length == 16) {
                         var numberTemp = number.replace(" ", "")
                         numberTemp = numberTemp.replace("-", "")
-                        Log.d("number_auth", "onVerificationCompleted:$number")
                         rezult = verificateUseCase.verificate(numberTemp)
                     } else {
                         throw CustomException("Please Enter correct Number")
@@ -42,6 +44,7 @@ class LogInViewModel @Inject constructor(private val verificateUseCase: Verifica
                 } else {
                     throw CustomException("Please Enter correct Number")
                 }
+                Log.d("number_auth", "number"+rezult.toString())
                 if (rezult is PhoneAuthResult.CodeSent) {
                     if (rezult.token != null)
                         _state.value = StateLogIn.Success(rezult.verificationId, rezult.token)
