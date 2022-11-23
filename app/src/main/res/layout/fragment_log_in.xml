@@ -50,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:ems="11"
                 android:hint="+7 929 999-99-99"
+                android:imeOptions="actionDone"
                 android:inputType="phone"
                 android:maxLength="16" />
         </com.google.android.material.textfield.TextInputLayout>

@@ -85,7 +85,7 @@ class MainFragment : Fragment() {
         onboardingItemsAdapter =
             OnboardingItemsAdapter(
                 listOf(
-                    OnboardingItem(R.drawable.job_search, "Поиск работы","Наша приложение нацелено на то ,чтоб помочь найти вам работу."),
+                    OnboardingItem(R.drawable.job_search, "Поиск работы","Наше приложение нацелено на помощь в нахождении работников."),
                     OnboardingItem(R.drawable.job_do, "Процесс подбора","Мы нацелены на несложную работу посилную каждому из-вас"),
                     OnboardingItem(R.drawable.mountains, "Зарабатывай и иди вперед","Мы желаем вам удачи в поисках ваших первых подработок"),
                 ))

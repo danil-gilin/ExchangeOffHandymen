@@ -14,7 +14,7 @@ data class User(
     val phone:String,
     val email:String?,
     val rating:Double?,
-   val geoPoint:@RawValue GeoPosition?,
+    val geoPoint:@RawValue GeoPosition?,
     val skills:List<String>?,
     val description:String?,
     val wokerFlag:Boolean,
