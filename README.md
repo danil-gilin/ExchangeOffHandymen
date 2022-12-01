@@ -19,8 +19,8 @@
 
 <img src="https://user-images.githubusercontent.com/52373415/205019761-09f32e16-fd53-492b-87c9-aa4118ddcbb2.png" width="150" height="280">
 
-
 Редактирование профиля
+
 <img src="https://user-images.githubusercontent.com/52373415/205019842-2c0540ba-e527-4d31-86f2-ab0d8736a9c5.png" width="150" height="280">
 
 
