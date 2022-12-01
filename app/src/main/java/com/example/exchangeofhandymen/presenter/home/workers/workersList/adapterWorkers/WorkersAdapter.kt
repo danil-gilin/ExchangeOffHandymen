@@ -1,30 +1,21 @@
 package com.example.exchangeofhandymen.presenter.home.workers.workersList.adapterWorkers
 
-import android.location.Address
-import android.location.Geocoder
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.exchangeofhandymen.R
-import com.example.exchangeofhandymen.databinding.SkillItemBinding
 import com.example.exchangeofhandymen.databinding.WorkersItemBinding
-import com.example.exchangeofhandymen.entity.Skill
-import com.example.exchangeofhandymen.entity.User
-import com.example.exchangeofhandymen.entity.Worker
+import com.example.exchangeofhandymen.entity.worker.Worker
+import com.example.exchangeofhandymen.entity.worker.WorrkerInt
 import com.example.exchangeofhandymen.presenter.home.profile.profileUser.profileAdapter.SkillsAdapter
 import com.google.android.flexbox.FlexboxLayoutManager
-import java.util.*
 import kotlin.math.roundToInt
 
-class WorkersAdapter(private val clickWorker:(Worker)->Unit) :
-    ListAdapter<Worker, SkillViewHolder>(SkillDiffutil()) {
+class WorkersAdapter(private val clickWorker:(WorrkerInt)->Unit) :
+    ListAdapter<WorrkerInt, SkillViewHolder>(SkillDiffutil()) {
 
 
 
@@ -67,13 +58,13 @@ class WorkersAdapter(private val clickWorker:(Worker)->Unit) :
 
 class SkillViewHolder(val binding: WorkersItemBinding) : RecyclerView.ViewHolder(binding.root)
 
-class SkillDiffutil : DiffUtil.ItemCallback<Worker>() {
-    override fun areItemsTheSame(oldItem: Worker, newItem: Worker): Boolean {
+class SkillDiffutil : DiffUtil.ItemCallback<WorrkerInt>() {
+    override fun areItemsTheSame(oldItem: WorrkerInt, newItem: WorrkerInt): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Worker, newItem: Worker): Boolean {
-        return oldItem == newItem
+    override fun areContentsTheSame(oldItem: WorrkerInt, newItem: WorrkerInt): Boolean {
+        return oldItem.equals(newItem)
     }
 
 }

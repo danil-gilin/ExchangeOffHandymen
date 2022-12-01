@@ -3,11 +3,11 @@ package com.example.exchangeofhandymen.presenter.home.profile.skillAdd
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.exchangeofhandymen.domain.AddSkillUseCase
-import com.example.exchangeofhandymen.domain.GetAllSkillsUseCase
+import com.example.exchangeofhandymen.domain.skill.AddSkillUseCase
+import com.example.exchangeofhandymen.domain.skill.GetAllSkillsUseCase
 import com.example.exchangeofhandymen.entity.CustomException
 import com.example.exchangeofhandymen.entity.Skill
-import com.example.exchangeofhandymen.entity.User
+import com.example.exchangeofhandymen.entity.User.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

@@ -1,6 +1,5 @@
 package com.example.exchangeofhandymen.presenter.home.profile.profileEdit
 
-import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
@@ -10,11 +9,16 @@ import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.exchangeofhandymen.domain.*
+import com.example.exchangeofhandymen.domain.photo.DeletePhotoUseCase
+import com.example.exchangeofhandymen.domain.photo.SavePhotoUseCase
+import com.example.exchangeofhandymen.domain.profile.EditUserUseCase
+import com.example.exchangeofhandymen.domain.profile.SignOutUserUseCase
+import com.example.exchangeofhandymen.domain.skill.DeleteSkillUseCase
+import com.example.exchangeofhandymen.domain.skill.GettSkillsUseCase
 import com.example.exchangeofhandymen.entity.Constance
 import com.example.exchangeofhandymen.entity.CustomException
 import com.example.exchangeofhandymen.entity.Skill
-import com.example.exchangeofhandymen.entity.User
+import com.example.exchangeofhandymen.entity.User.User
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationToken
@@ -33,13 +37,12 @@ class ProfileEditViewModel @Inject constructor(
     private val deleteSkillUseCase: DeleteSkillUseCase,
     private val savePhotoUseCase: SavePhotoUseCase,
     private val deletePhotoUseCase: DeletePhotoUseCase,
-    @ActivityContext private val activity: Context
+    @ActivityContext private val activity: Context,
+    private val signOutUserUseCase: SignOutUserUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<ProfEditState>(ProfEditState.Start)
     val state = _state.asStateFlow()
-
-
 
 
     fun gettSkills(skillsId: List<String>?) {
@@ -65,20 +68,20 @@ class ProfileEditViewModel @Inject constructor(
             var errorDescription: String? = null
             var flagNotError = true
             try {
-                if (user.name?.isEmpty() == true){
-                    errorName="Имя не может быть пусты"
+                if (user.name?.isEmpty() == true) {
+                    errorName = "Имя не может быть пусты"
                     flagNotError = false
                 }
-                if (user.email?.isEmpty() == true){
-                    errorEmail="Почта не может быть пустой"
+                if (user.email?.isEmpty() == true) {
+                    errorEmail = "Почта не может быть пустой"
                     flagNotError = false
                 }
-                if(!isEmailValid(user.email.toString()) && user.email != Constance.NoInformationText){
-                    errorEmail="Почта введена неверно"
+                if (!isEmailValid(user.email.toString()) && user.email != Constance.NoInformationText) {
+                    errorEmail = "Почта введена неверно"
                     flagNotError = false
                 }
-                if (user.description?.isEmpty() == true){
-                    errorDescription="Расскажите о себе"
+                if (user.description?.isEmpty() == true) {
+                    errorDescription = "Расскажите о себе"
                     flagNotError = false
                 }
                 if (flagNotError) {
@@ -104,20 +107,21 @@ class ProfileEditViewModel @Inject constructor(
         }
     }
 
-   private fun isEmailValid(email:String): Boolean {
-        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    private fun isEmailValid(email: String): Boolean {
+        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email)
+            .matches()
     }
 
-    fun savePhoto( uri:Uri) {
-       viewModelScope.launch {
-           _state.value = ProfEditState.Loading
-           try {
-               val url = savePhotoUseCase.savePhoto(uri)
-               _state.value = ProfEditState.SuccessPhoto(url)
-           }catch (e:Exception){
-               _state.value = ProfEditState.Error(null,null,null)
-           }
-       }
+    fun savePhoto(uri: Uri) {
+        viewModelScope.launch {
+            _state.value = ProfEditState.Loading
+            try {
+                val url = savePhotoUseCase.savePhoto(uri)
+                _state.value = ProfEditState.SuccessPhoto(url)
+            } catch (e: Exception) {
+                _state.value = ProfEditState.Error(null, null, null)
+            }
+        }
     }
 
     fun deletePhoto() {
@@ -126,8 +130,8 @@ class ProfileEditViewModel @Inject constructor(
             try {
                 deletePhotoUseCase.deletePhoto()
                 _state.value = ProfEditState.SuccessPhoto("")
-            }catch (e:Exception){
-                _state.value = ProfEditState.Error(null,null,null)
+            } catch (e: Exception) {
+                _state.value = ProfEditState.Error(null, null, null)
             }
         }
     }
@@ -138,7 +142,7 @@ class ProfileEditViewModel @Inject constructor(
         required_permission: Array<String>
     ) {
         viewModelScope.launch {
-            _state.value=ProfEditState.Loading
+            _state.value = ProfEditState.Loading
             try {
                 if (required_permission.all { permission ->
                         ContextCompat.checkSelfPermission(
@@ -156,8 +160,8 @@ class ProfileEditViewModel @Inject constructor(
                         })
                         .addOnSuccessListener { location: Location? ->
                             if (location != null) {
-                                Log.d("MyGeoer",location.longitude.toString())
-                                Log.d("MyGeoer",location.latitude.toString())
+                                Log.d("MyGeoer", location.longitude.toString())
+                                Log.d("MyGeoer", location.latitude.toString())
                                 _state.value = ProfEditState.SuccessSaveGeo(
                                     location.latitude,
                                     location.longitude
@@ -167,11 +171,23 @@ class ProfileEditViewModel @Inject constructor(
                             }
                         }.await()
                 } else {
-                    _state.value = ProfEditState.ErrorCustom("Дайте разрешение, чтоб определить ваше местоположение")
+                    _state.value =
+                        ProfEditState.ErrorCustom("Дайте разрешение, чтоб определить ваше местоположение")
                 }
-            }catch (e:Exception){
-                Log.d("erroGeo","Here 2")
+            } catch (e: Exception) {
+                Log.d("erroGeo", "Here 2")
                 _state.value = ProfEditState.ErrorCustom("Не удалось получить данные")
+            }
+        }
+    }
+
+    fun signOut() {
+        viewModelScope.launch {
+            _state.value = ProfEditState.Loading
+            try {
+                signOutUserUseCase.sigOutUseCase()
+            } catch (e: Exception) {
+                _state.value = ProfEditState.Error(null, null, null)
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.example.exchangeofhandymen.presenter.home.workers.workersList
 
-import android.location.Geocoder
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,17 +9,15 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.exchangeofhandymen.R
 import com.example.exchangeofhandymen.databinding.FragmentWorkersBinding
-import com.example.exchangeofhandymen.entity.Worker
-import com.example.exchangeofhandymen.presenter.home.profile.profileUser.profileAdapter.SkillsAdapter
+import com.example.exchangeofhandymen.entity.worker.Worker
+import com.example.exchangeofhandymen.entity.worker.WorkerDB
+import com.example.exchangeofhandymen.entity.worker.WorrkerInt
 import com.example.exchangeofhandymen.presenter.home.workers.workersList.adapterWorkers.WorkersAdapter
 import com.google.firebase.auth.FirebaseAuth
 
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -84,9 +81,14 @@ class WorkersFragment : Fragment() {
         return binding.root
     }
 
-    private fun clickWorker(worker: Worker){
+    private fun clickWorker(worker: WorrkerInt){
         val bundle=Bundle()
-        bundle.putParcelable("worker",worker)
+        if (worker is Worker) {
+            bundle.putParcelable("worker", worker)
+        }
+        if(worker is WorkerDB){
+            bundle.putParcelable("worker", worker)
+        }
         findNavController().navigate(R.id.action_navigation_workers_to_workerProfileFragment,bundle)
     }
 

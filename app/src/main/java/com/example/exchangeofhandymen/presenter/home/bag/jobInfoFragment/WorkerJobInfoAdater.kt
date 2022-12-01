@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.exchangeofhandymen.R
 import com.example.exchangeofhandymen.databinding.WorkersItemBinding
-import com.example.exchangeofhandymen.entity.Worker
+import com.example.exchangeofhandymen.entity.worker.Worker
 import com.example.exchangeofhandymen.presenter.home.profile.profileUser.profileAdapter.SkillsAdapter
 import com.google.android.flexbox.FlexboxLayoutManager
 import kotlin.math.roundToInt

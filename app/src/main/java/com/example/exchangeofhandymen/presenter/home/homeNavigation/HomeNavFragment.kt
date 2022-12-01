@@ -66,10 +66,6 @@ class HomeNavFragment : Fragment() {
 
         val options = NavOptions.Builder()
             .setLaunchSingleTop(true)
-            .setEnterAnim(androidx.navigation.ui.R.anim.nav_default_enter_anim)
-            .setExitAnim(androidx.navigation.ui.R.anim.nav_default_exit_anim)
-            .setPopEnterAnim( androidx.navigation.ui.R.anim.nav_default_pop_enter_anim)
-            .setPopExitAnim(androidx.navigation.ui.R.anim.nav_default_pop_exit_anim)
             .setPopUpTo(navController.graph.startDestinationId, false)
             .build()
 

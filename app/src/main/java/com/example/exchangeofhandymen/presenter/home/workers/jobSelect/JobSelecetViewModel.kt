@@ -2,9 +2,8 @@ package com.example.exchangeofhandymen.presenter.home.workers.jobSelect
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.exchangeofhandymen.domain.GetJobUseCase
-import com.example.exchangeofhandymen.domain.InviteWorkerUseCase
-import com.example.exchangeofhandymen.presenter.home.bag.listJob.BagState
+import com.example.exchangeofhandymen.domain.job.GetJobUseCase
+import com.example.exchangeofhandymen.domain.worker.InviteWorkerUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

@@ -3,8 +3,6 @@ package com.example.exchangeofhandymen.presenter.home.profile.profileEdit
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
-import android.location.Address
-import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -23,8 +21,7 @@ import com.example.exchangeofhandymen.databinding.FragmentProfileEditBinding
 
 import com.example.exchangeofhandymen.entity.GeoPosition
 import com.example.exchangeofhandymen.entity.Skill
-import com.example.exchangeofhandymen.entity.User
-import com.example.exchangeofhandymen.presenter.home.homeNavigation.HomeNavFragment
+import com.example.exchangeofhandymen.entity.User.User
 import com.example.exchangeofhandymen.presenter.home.profile.profileUser.profileAdapter.SkillsAdapter
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -98,10 +95,8 @@ class ProfileEditFragment : Fragment() {
                 val bundle=it.savedStateHandle.get<Bundle>("addFragment")
                 if(bundle?.getParcelable<User>("user") !=null){
                     user=bundle?.getParcelable("user")
-
                     viewModel.gettSkills(user!!.skills)
                 }
-
                 val newskillName=bundle?.getString("skill")
                 deleteSkill.remove(deleteSkill.find { it.name==newskillName })
             }
@@ -214,6 +209,8 @@ class ProfileEditFragment : Fragment() {
             val navOptions: NavOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.mainFragment, true)
                 .build()
+            viewModel.signOut()
+
             Firebase.auth.signOut()
 
             val navController = activity?.findNavController(R.id.nav_view)
@@ -282,8 +279,10 @@ class ProfileEditFragment : Fragment() {
       val nameEdit=binding.nameEdit.text.toString()
       val emailEdit=binding.mailEdit.text.toString()
       val wokerFlag=checkWorkerFlag()
-        bundle.putParcelable("user",User(nameEdit,user!!.phone,emailEdit,user!!.rating,userGeo,user!!.skills,decriptionEdit,
-            wokerFlag,uriAvatar))
+        bundle.putParcelable("user",
+            User(nameEdit,user!!.phone,emailEdit,user!!.rating,userGeo,user!!.skills,decriptionEdit,
+            wokerFlag,uriAvatar)
+        )
         bundle.putParcelableArrayList("deleteSkill",deleteSkill)
 
        findNavController().navigate(R.id.action_profileEditFragment_to_skillsAddFragment,bundle)

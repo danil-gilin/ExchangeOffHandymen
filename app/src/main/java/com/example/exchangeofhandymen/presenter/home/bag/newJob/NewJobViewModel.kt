@@ -2,17 +2,13 @@ package com.example.exchangeofhandymen.presenter.home.bag.newJob
 
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Address
-import android.location.Geocoder
 import android.location.Location
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.exchangeofhandymen.domain.SaveJobUseCase
-import com.example.exchangeofhandymen.entity.GeoPosition
+import com.example.exchangeofhandymen.domain.job.SaveJobUseCase
 import com.example.exchangeofhandymen.entity.job.Job
-import com.example.exchangeofhandymen.presenter.home.profile.profileEdit.ProfEditState
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationToken
@@ -23,7 +19,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import java.util.*
 import javax.inject.Inject
 
 class NewJobViewModel @Inject constructor(private val saveJobUseCase: SaveJobUseCase,

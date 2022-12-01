@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.exchangeofhandymen.entity.PhoneAuthResult
-import com.example.exchangeofhandymen.domain.VerificateUseCase
+import com.example.exchangeofhandymen.domain.logIn.VerificateUseCase
 import com.example.exchangeofhandymen.entity.CustomException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.coroutines.resume
 
 class OtpViewModel  @Inject constructor(private val verificateUseCase: VerificateUseCase): ViewModel() {
 

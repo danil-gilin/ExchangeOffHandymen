@@ -2,7 +2,7 @@ package com.example.exchangeofhandymen.presenter.home.homeNavigation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.exchangeofhandymen.domain.NewProfileUseCase
+import com.example.exchangeofhandymen.domain.profile.NewProfileUseCase
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.launch
 import javax.inject.Inject

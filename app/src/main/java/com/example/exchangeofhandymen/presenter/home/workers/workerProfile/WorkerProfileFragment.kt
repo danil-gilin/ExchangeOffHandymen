@@ -2,7 +2,6 @@ package com.example.exchangeofhandymen.presenter.home.workers.workerProfile
 
 import android.location.Address
 import android.location.Geocoder
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -16,12 +15,11 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.exchangeofhandymen.R
 import com.example.exchangeofhandymen.databinding.FragmentWorkerProfileBinding
-import com.example.exchangeofhandymen.entity.Worker
+import com.example.exchangeofhandymen.entity.worker.Worker
+import com.example.exchangeofhandymen.entity.worker.WorrkerInt
 import com.example.exchangeofhandymen.presenter.home.profile.profileUser.profileAdapter.SkillsAdapter
 import com.google.android.flexbox.FlexboxLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_workers.*
-import kotlinx.android.synthetic.main.workers_item.*
 import java.util.*
 import javax.inject.Inject
 
@@ -37,7 +35,7 @@ class WorkerProfileFragment : Fragment() {
 
     private lateinit var binding:FragmentWorkerProfileBinding
     private val viewModel: WorkerProfileViewModel by viewModels{factory}
-    private lateinit var worker: Worker
+    private lateinit var worker: WorrkerInt
     private val adapter= SkillsAdapter()
 
 

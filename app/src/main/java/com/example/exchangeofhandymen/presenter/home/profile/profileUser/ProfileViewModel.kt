@@ -2,11 +2,11 @@ package com.example.exchangeofhandymen.presenter.home.profile.profileUser
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.exchangeofhandymen.domain.GetProfileUseCase
-import com.example.exchangeofhandymen.domain.GettSkillsUseCase
+import com.example.exchangeofhandymen.domain.profile.GetProfileUseCase
+import com.example.exchangeofhandymen.domain.skill.GettSkillsUseCase
 import com.example.exchangeofhandymen.entity.Constance
 import com.example.exchangeofhandymen.entity.Skill
-import com.example.exchangeofhandymen.entity.User
+import com.example.exchangeofhandymen.entity.User.User
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

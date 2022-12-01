@@ -2,16 +2,15 @@ package com.example.exchangeofhandymen.presenter.home.bag.jobInfoFragment
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.exchangeofhandymen.domain.GetProfileIsWorkerUseCase
-import com.example.exchangeofhandymen.domain.GetWorkerListUseCase
-import com.example.exchangeofhandymen.entity.Worker
-import com.example.exchangeofhandymen.entity.job.JobWithId
+import com.example.exchangeofhandymen.domain.worker.GetProfileIsWorkerUseCase
+import com.example.exchangeofhandymen.domain.worker.GetWorkerListUseCase
+import com.example.exchangeofhandymen.entity.worker.Worker
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class JobInfoViewModel @Inject constructor(private val getWorkerListUseCase: GetWorkerListUseCase,private val getProfileIsWorkerUseCase: GetProfileIsWorkerUseCase) : ViewModel() {
+class JobInfoViewModel @Inject constructor(private val getWorkerListUseCase: GetWorkerListUseCase, private val getProfileIsWorkerUseCase: GetProfileIsWorkerUseCase) : ViewModel() {
 
     private val _listWorker= Channel<List<Worker>>{  }
     val listWorker=_listWorker.receiveAsFlow()

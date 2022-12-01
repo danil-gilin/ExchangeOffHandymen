@@ -1,28 +1,22 @@
 package com.example.exchangeofhandymen.presenter.home.profile.profileUser
 
-import android.graphics.drawable.Drawable
-import android.location.Address
-import android.location.Geocoder
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.exchangeofhandymen.R
 import com.example.exchangeofhandymen.databinding.FragmentProfileBinding
-import com.example.exchangeofhandymen.entity.User
+import com.example.exchangeofhandymen.entity.User.User
 import com.example.exchangeofhandymen.presenter.home.profile.profileUser.profileAdapter.SkillsAdapter
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -41,7 +35,7 @@ class ProfileFragment : Fragment() {
     private val viewModel: ProfileViewModel by viewModels { profileViewModelFactory }
     private val auth= FirebaseAuth.getInstance()
     private val adapter= SkillsAdapter()
-    private var user:User?=null
+    private var user: User?=null
 
 
     override fun onCreateView(

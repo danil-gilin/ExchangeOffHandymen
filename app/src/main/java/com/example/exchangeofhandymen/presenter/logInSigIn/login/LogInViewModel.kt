@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.exchangeofhandymen.entity.PhoneAuthResult
-import com.example.exchangeofhandymen.domain.VerificateUseCase
+import com.example.exchangeofhandymen.domain.logIn.VerificateUseCase
 import com.example.exchangeofhandymen.entity.CustomException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
