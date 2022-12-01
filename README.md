@@ -4,7 +4,6 @@
 # Вход
 Вход/регистрация реализован через отсылание токена на телефон пользователю
 
-![image](https://user-images.githubusercontent.com/52373415/205019044-f0551e72-c25c-452c-a1cb-97ea97a973fc.png)
 <img src="https://user-images.githubusercontent.com/52373415/205019044-f0551e72-c25c-452c-a1cb-97ea97a973fc.png" width="150" height="280">
 
 
