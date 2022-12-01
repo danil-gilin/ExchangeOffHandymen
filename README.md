@@ -9,16 +9,14 @@
 
 <img src="https://user-images.githubusercontent.com/52373415/205019285-5b4da5a2-5f2c-4a1b-b592-8e45965c85b9.png" width="150" height="280">
 
-![image](https://user-images.githubusercontent.com/52373415/205019285-5b4da5a2-5f2c-4a1b-b592-8e45965c85b9.png)
 
 # Главное меню
 
-![image](https://user-images.githubusercontent.com/52373415/205019543-35d17f44-2430-4adb-89b4-c8fc152b776a.png)
 <img src="https://user-images.githubusercontent.com/52373415/205019543-35d17f44-2430-4adb-89b4-c8fc152b776a.png" width="150" height="280">
 
 
 # Профиль
-![image](https://user-images.githubusercontent.com/52373415/205019761-09f32e16-fd53-492b-87c9-aa4118ddcbb2.png)
+
 
 <img src="https://user-images.githubusercontent.com/52373415/205019761-09f32e16-fd53-492b-87c9-aa4118ddcbb2.png" width="150" height="280">
 
